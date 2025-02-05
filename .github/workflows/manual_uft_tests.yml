@@ -48,7 +48,7 @@ jobs:
       run:  if (TEST-PATH $env:LAUNCHER_EXE) {
               echo "FTToolsLauncher.exe already exists"
             } else {
-              curl -L -o $env:LAUNCHER_EXE $env:LAUNCHER_URL
+              Invoke-WebRequest -Uri $env:LAUNCHER_URL -OutFile $env:LAUNCHER_EXE
             }
 
   runUftTestsFromFileSystem:
