@@ -30,15 +30,26 @@ jobs:
     runs-on: self-hosted
     needs: getUftTests
     steps:
-    - name: Create properties file
-      run: |
-        @"
-        runType=FileSystem
-        Test1=$($pwd.Path.Replace('\', '\\') + '\\uft-one-tests\\Success')
-        resultsFilename=$env:RES_XML
-        "@ > $env:PROPS_TXT
-    - name: Check properies file
-      run: TEST-PATH $env:PROPS_TXT
+      - name: Create properties file (UTF-8)
+        run: |
+          $content = @"
+          runType=FileSystem
+          Test1=$($pwd.Path.Replace('\', '\\') + '\\uft-one-tests\\Success')
+          resultsFilename=$env:RES_XML
+          "@
+  
+          # Save file with UTF-8 encoding
+          $content | Out-File -FilePath $env:PROPS_TXT -Encoding utf8
+  
+      - name: Check properties file
+        run: |
+          if (Test-Path $env:PROPS_TXT) {
+            Write-Host "Properties file created successfully!"
+            Get-Content $env:PROPS_TXT  # Optional: Print file content for debugging
+          } else {
+            Write-Error "Properties file was not created!"
+            exit 1
+          }
 
   getFTToolsLauncher:
     runs-on: self-hosted
