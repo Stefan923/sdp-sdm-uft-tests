@@ -32,9 +32,7 @@ jobs:
         $content = @"
         runType=FileSystem
         resultsFilename=build\\ResultsMultiTests.xml
-        Test1=$($pwd.Path.Replace('\', '\\') + '\\sdp-sdm-uft-tests\\DT_Execution')
-        Test2=$($pwd.Path.Replace('\', '\\') + '\\sdp-sdm-uft-tests\\GUITest1')
-        Test3=$($pwd.Path.Replace('\', '\\') + '\\sdp-sdm-uft-tests\\GUITest2-1')
+        Test1=$($pwd.Path.Replace('\', '\\'))
         unifiedTestcaseClassname=true
         "@
 
