@@ -76,11 +76,6 @@ jobs:
             -ArgumentList "-paramfile $env:PROPS_TXT" `
             -NoNewWindow -PassThru -RedirectStandardOutput output.log -RedirectStandardError error.log
   
-          # Wait and stream logs in real-time
-          while (-not $process.HasExited) {
-            Get-Content output.log -Wait
-          }
-  
           # Capture Exit Code
           "X=$($process.ExitCode)" >> $env:GITHUB_OUTPUT
   
