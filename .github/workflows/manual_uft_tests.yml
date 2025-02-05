@@ -31,10 +31,11 @@ jobs:
       run: |
         $content = @"
         runType=FileSystem
+        resultsFilename=$env:RES_XML
         Test1=$($pwd.Path.Replace('\', '\\') + '\\sdp-sdm-uft-tests\\DT_Execution')
         Test2=$($pwd.Path.Replace('\', '\\') + '\\sdp-sdm-uft-tests\\GUITest1')
         Test3=$($pwd.Path.Replace('\', '\\') + '\\sdp-sdm-uft-tests\\GUITest2-1')
-        resultsFilename=$env:RES_XML
+        unifiedTestcaseClassname=true
         "@
 
         # Save file with UTF-8 encoding
