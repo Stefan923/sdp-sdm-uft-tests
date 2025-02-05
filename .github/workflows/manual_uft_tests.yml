@@ -1,4 +1,4 @@
-name: UFT One Success Demo
+name: Manual - UFT tests
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI or API.
 on:
@@ -64,7 +64,7 @@ jobs:
       run: |
         $process = Start-Process -FilePath "$env:LAUNCHER_EXE" `
           -ArgumentList "-paramfile $env:PROPS_TXT" `
-          -NoNewWindow -PassThru -RedirectStandardOutput output.log -RedirectStandardError error.log
+          -NoNewWindow -PassThru *>&1
 
         # Capture Exit Code
         "X=$($process.ExitCode)" >> $env:GITHUB_OUTPUT
