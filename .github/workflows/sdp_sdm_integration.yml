@@ -1,0 +1,44 @@
+name: MANUAL - OpenText Software Delivery Platform Integration
+
+# Events the integration should be triggered on
+on:
+  # Triggers the workflow on requested, completed types
+  workflow_run:
+    # List of workflows to integrate with ALM Octane
+    workflows: [ MANUAL - Many Jobs Serial Workflow, MANUAL - Many Jobs Parallel Workflow, MANUAL - Single Job Workflow, MANUAL - Single Job With Inputs Workflow, MANUAL - Automated Runs Workflow, MANUAL - Performance Workflow ]
+    types: [ requested, in_progress, completed ]
+  pull_request:
+    types: [opened, edited, closed, reopened]
+
+# Node configuration for allowing HTTPS requests
+env:
+    NODE_TLS_REJECT_UNAUTHORIZED: 0
+
+  # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  octane_integration_job:
+    # List of runner tags
+    runs-on: [ self-hosted, runner-stefan ]
+
+    name: OctaneIntegration#${{github.event.action}}#${{github.event.workflow_run.id}}
+    steps:
+      - uses: actions/checkout@v4
+      - name: ALM Octane GitHub Actions Integration
+        # Reference to our public GitHub action
+        #uses: MicroFocus/alm-octane-github-actions-integration@v24.4.1
+        uses: ./
+        id: gitHubActionsIntegration
+
+        # Config parameters for the integration
+        with:
+          # ALM Octane connection data
+          githubToken: ${{secrets.GITHUB_TOKEN}}
+          unitTestResultsGlobPattern: "**/*.xml"
+          octaneUrl: 'https://laura-1.almoctane.com/'
+          octaneSharedSpace: 1001
+          octaneWorkspace: 1002
+          pipelineNamePattern: '${repository_name} ${workflow_name}'
+          octaneClientId: 'github_8nlzyvw59vkqlb23v5w5wr542'
+          octaneClientSecret: '?1451772536224221421199O'
+          serverBaseUrl: 'https://github.com'
+          logLevel: '1'
