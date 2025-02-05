@@ -84,3 +84,9 @@ jobs:
         with:
           script: |
             core.setFailed('The job runUftTestsFromFileSystem failed with status ${{ steps.run-tests.outputs.X }} !')
+            
+      - name: Archive UFT Test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-test-report
+          path: target/surefire-reports/*.xml
