@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: ALM Octane GitHub Actions Integration
         # Reference to our public GitHub action
-        uses: MicroFocus/alm-octane-github-actions-integration@v25.1.0
+        uses: MicroFocus/alm-octane-github-actions-integration@v25.1.1
         id: gitHubActionsIntegration
 
         # Config parameters for the integration
