@@ -31,7 +31,7 @@ jobs:
       run: |
         $content = @"
         runType=FileSystem
-        resultsFilename=ResultsMultiTests.xml
+        resultsFilename=build\\ResultsMultiTests.xml
         Test1=$($pwd.Path.Replace('\', '\\') + '\\sdp-sdm-uft-tests\\DT_Execution')
         Test2=$($pwd.Path.Replace('\', '\\') + '\\sdp-sdm-uft-tests\\GUITest1')
         Test3=$($pwd.Path.Replace('\', '\\') + '\\sdp-sdm-uft-tests\\GUITest2-1')
@@ -79,4 +79,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: junit-test-report
-        path: '**\*.xml'
+        path: 'build\**\*.xml'
