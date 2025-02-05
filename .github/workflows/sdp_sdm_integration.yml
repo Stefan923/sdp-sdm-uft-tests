@@ -5,7 +5,7 @@ on:
   # Triggers the workflow on requested, completed types
   workflow_run:
     # List of workflows to integrate with ALM Octane
-    workflows: [ MANUAL - Many Jobs Serial Workflow, MANUAL - Many Jobs Parallel Workflow, MANUAL - Single Job Workflow, MANUAL - Single Job With Inputs Workflow, MANUAL - Automated Runs Workflow, MANUAL - Performance Workflow ]
+    workflows: [ UFT One Success Demo ]
     types: [ requested, in_progress, completed ]
   pull_request:
     types: [opened, edited, closed, reopened]
