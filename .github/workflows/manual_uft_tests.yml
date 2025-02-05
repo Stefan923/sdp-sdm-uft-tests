@@ -57,7 +57,7 @@ jobs:
     steps:
       - name: Run FT tool
         id: run-tests
-        shell: pwsh
+        shell: powershell
         run: |
           $process = Start-Process -FilePath "$env:LAUNCHER_EXE" `
             -ArgumentList "-paramfile $env:PROPS_TXT" `
