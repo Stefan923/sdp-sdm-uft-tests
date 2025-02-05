@@ -34,7 +34,9 @@ jobs:
         run: |
           $content = @"
           runType=FileSystem
-          Test1=$($pwd.Path.Replace('\', '\\') + '\\uft-one-tests\\Success')
+          Test1=$($pwd.Path.Replace('\', '\\') + '\\sdp-sdm-uft-tests\\DT_Execution')
+          Test2=$($pwd.Path.Replace('\', '\\') + '\\sdp-sdm-uft-tests\\GUITest1')
+          Test3=$($pwd.Path.Replace('\', '\\') + '\\sdp-sdm-uft-tests\\GUITest2-1')
           resultsFilename=$env:RES_XML
           "@
   
