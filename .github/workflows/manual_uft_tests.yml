@@ -15,48 +15,41 @@ defaults:
     working-directory: ..\
 
 jobs:
-  getUftTests:
+  run-tests:
     runs-on: self-hosted
     steps:
     - name: Display the working directory
       run: echo "$pwd"
+      
     - name: Checkout current repo
       uses: actions/checkout@v4
       with:
         ref: ${{github.ref_name}}
         clean: false
-    
-  createPropsFile:
-    runs-on: self-hosted
-    needs: getUftTests
-    steps:
-      - name: Create properties file (UTF-8)
-        run: |
-          $content = @"
-          runType=FileSystem
-          Test1=$($pwd.Path.Replace('\', '\\') + '\\sdp-sdm-uft-tests\\DT_Execution')
-          Test2=$($pwd.Path.Replace('\', '\\') + '\\sdp-sdm-uft-tests\\GUITest1')
-          Test3=$($pwd.Path.Replace('\', '\\') + '\\sdp-sdm-uft-tests\\GUITest2-1')
-          resultsFilename=$env:RES_XML
-          "@
-  
-          # Save file with UTF-8 encoding
-          $content | Out-File -FilePath $env:PROPS_TXT -Encoding utf8
-  
-      - name: Check properties file
-        run: |
-          if (Test-Path $env:PROPS_TXT) {
-            Write-Host "Properties file created successfully!"
-            Get-Content $env:PROPS_TXT  # Optional: Print file content for debugging
-          } else {
-            Write-Error "Properties file was not created!"
-            exit 1
-          }
+        
+    - name: Create properties file (UTF-8)
+      run: |
+        $content = @"
+        runType=FileSystem
+        Test1=$($pwd.Path.Replace('\', '\\') + '\\sdp-sdm-uft-tests\\DT_Execution')
+        Test2=$($pwd.Path.Replace('\', '\\') + '\\sdp-sdm-uft-tests\\GUITest1')
+        Test3=$($pwd.Path.Replace('\', '\\') + '\\sdp-sdm-uft-tests\\GUITest2-1')
+        resultsFilename=$env:RES_XML
+        "@
 
-  getFTToolsLauncher:
-    runs-on: self-hosted
-    needs: getUftTests
-    steps:
+        # Save file with UTF-8 encoding
+        $content | Out-File -FilePath $env:PROPS_TXT -Encoding utf8
+  
+    - name: Check properties file
+      run: |
+        if (Test-Path $env:PROPS_TXT) {
+          Write-Host "Properties file created successfully!"
+          Get-Content $env:PROPS_TXT  # Optional: Print file content for debugging
+        } else {
+          Write-Error "Properties file was not created!"
+          exit 1
+        }
+
     - name: GET FTToolsLauncher.exe
       run:  if (TEST-PATH $env:LAUNCHER_EXE) {
               echo "FTToolsLauncher.exe already exists"
@@ -64,29 +57,25 @@ jobs:
               Invoke-WebRequest -Uri $env:LAUNCHER_URL -OutFile $env:LAUNCHER_EXE
             }
 
-  runUftTestsFromFileSystem:
-    runs-on: self-hosted
-    needs: [getUftTests, createPropsFile, getFTToolsLauncher]
-    steps:
-      - name: Run FT tool
-        id: run-tests
-        shell: powershell
-        run: |
-          $process = Start-Process -FilePath "$env:LAUNCHER_EXE" `
-            -ArgumentList "-paramfile $env:PROPS_TXT" `
-            -NoNewWindow -PassThru -RedirectStandardOutput output.log -RedirectStandardError error.log
+    - name: Run FT tool
+      id: run-tests
+      shell: powershell
+      run: |
+        $process = Start-Process -FilePath "$env:LAUNCHER_EXE" `
+          -ArgumentList "-paramfile $env:PROPS_TXT" `
+          -NoNewWindow -PassThru -RedirectStandardOutput output.log -RedirectStandardError error.log
+
+        # Capture Exit Code
+        "X=$($process.ExitCode)" >> $env:GITHUB_OUTPUT
   
-          # Capture Exit Code
-          "X=$($process.ExitCode)" >> $env:GITHUB_OUTPUT
-  
-      - if: ${{ steps.run-tests.outputs.X != 0 }}
-        uses: actions/github-script@v6
-        with:
-          script: |
-            core.setFailed('The job runUftTestsFromFileSystem failed with status ${{ steps.run-tests.outputs.X }} !')
-            
-      - name: Archive UFT Test results
-        uses: actions/upload-artifact@v4
-        with:
-          name: junit-test-report
-          path: target/surefire-reports/*.xml
+    - if: ${{ steps.run-tests.outputs.X != 0 }}
+      uses: actions/github-script@v6
+      with:
+        script: |
+          core.setFailed('The job runUftTestsFromFileSystem failed with status ${{ steps.run-tests.outputs.X }} !')
+          
+    - name: Archive UFT Test results
+      uses: actions/upload-artifact@v4
+      with:
+        name: junit-test-report
+        path: ResultsMultiTests.xml
