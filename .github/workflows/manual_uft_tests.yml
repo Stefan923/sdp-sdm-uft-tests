@@ -11,7 +11,7 @@ env:
   LAUNCHER_URL: https://github.com/MicroFocus/ADM-FT-ToolsLauncher/releases/download/v1.0-beta-rev12/FTToolsLauncher_net48.exe
 defaults:
   run:
-    shell: pwsh
+    shell: powershell
     working-directory: ..\
 
 jobs:
