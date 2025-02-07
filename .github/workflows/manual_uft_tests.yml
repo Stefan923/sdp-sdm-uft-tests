@@ -32,7 +32,8 @@ jobs:
         $content = @"
         runType=FileSystem
         resultsFilename=UFT-test-results.xml
-        Test1=$($pwd.Path.Replace('\', '\\'))
+        Test1=$($pwd.Path.Replace('\', '\\') + '\\AddedTest\\ocatne\\GUITest5')
+        Test2=$($pwd.Path.Replace('\', '\\') + '\\GUITest1')
         unifiedTestcaseClassname=true
         "@
 
