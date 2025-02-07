@@ -77,4 +77,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: junit-test-report
-        path: '..\**\UFT-test-results.xml'
+        path: 'UFT-test-results.xml'
