@@ -33,6 +33,7 @@ jobs:
         runType=FileSystem
         resultsFilename=$($pwd.Path.Replace('\', '\\') + '\\UFT-test-results.xml')
         Test1=$($pwd.Path.Replace('\', '\\'))
+        unifiedTestcaseClassname=true
         "@
 
         # Save file with UTF-8 encoding
