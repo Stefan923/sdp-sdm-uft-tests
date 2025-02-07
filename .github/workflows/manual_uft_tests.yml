@@ -31,7 +31,7 @@ jobs:
       run: |
         $content = @"
         runType=FileSystem
-        resultsFilename=$($pwd.Path.Replace('\', '\\') + '\\UFT-test-results.xml')
+        resultsFilename=UFT-test-results.xml
         Test1=$($pwd.Path.Replace('\', '\\'))
         unifiedTestcaseClassname=true
         "@
