@@ -31,7 +31,7 @@ jobs:
       run: |
         $content = @"
         runType=FileSystem
-        resultsFilename=$env:RES_XML
+        resultsFilename=UFT-test-results.xml
         Test1=$($pwd.Path.Replace('\', '\\'))
         unifiedTestcaseClassname=true
         "@
@@ -77,4 +77,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: junit-test-report
-        path: '..\**\$env:RES_XML'
+        path: '..\**\UFT-test-results.xml'
