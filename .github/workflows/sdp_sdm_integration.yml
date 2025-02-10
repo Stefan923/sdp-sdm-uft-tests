@@ -33,11 +33,11 @@ jobs:
           # ALM Octane connection data
           githubToken: ${{secrets.GITHUB_TOKEN}}
           unitTestResultsGlobPattern: "**/*.xml"
-          octaneUrl: 'https://laura-1.almoctane.com/'
-          octaneSharedSpace: 1002
+          octaneUrl: 'https://qa8.almoctane.com/'
+          octaneSharedSpace: 1001
           octaneWorkspace: 1002
           pipelineNamePattern: '${repository_name} ${workflow_name}'
-          octaneClientId: 'github_8nlzyvw59vkqlb23v5w5wr542'
-          octaneClientSecret: '?1451772536224221421199O'
+          octaneClientId: 'GitHub Actions_my2eo329g713xt45gdjvyqrg8'
+          octaneClientSecret: '%2241611412477619613598R'
           serverBaseUrl: 'https://github.com'
           logLevel: '1'
