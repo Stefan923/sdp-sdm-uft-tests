@@ -57,7 +57,6 @@ jobs:
             }
 
     - name: Run FT tool
-      continue-on-error: true
       id: run-tests
       shell: powershell
       run: |
@@ -76,9 +75,11 @@ jobs:
       with:
         script: |
           core.setFailed('The job runUftTestsFromFileSystem failed with status ${{ steps.run-tests.outputs.X }} !')
+      continue-on-error: true
           
     - name: Archive UFT Test results
       uses: actions/upload-artifact@v4
       with:
         name: junit-test-report
         path: 'UFT-test-results.xml'
+      continue-on-error: true
