@@ -65,6 +65,9 @@ jobs:
           -ArgumentList "-paramfile $env:PROPS_TXT" `
           -NoNewWindow -PassThru *>&1
 
+        # Wait for the process to complete
+        $process | Wait-Process
+
         # Capture Exit Code
         "X=$($process.ExitCode)" >> $env:GITHUB_OUTPUT
   
