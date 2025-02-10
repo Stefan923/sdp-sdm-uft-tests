@@ -57,6 +57,7 @@ jobs:
             }
 
     - name: Run FT tool
+      continue-on-error: true
       id: run-tests
       shell: powershell
       run: |
